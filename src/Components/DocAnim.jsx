@@ -24,8 +24,8 @@ const LottieAnimation = () => {
   return (
     <div>
       {isScreenSmall ? null : (
-        <div class="flex-container">
-          <div class="flex-item-left">
+        <div className="flex-container">
+          <div className="flex-item-left">
             <img
               src={require("../Images/doctor.png")}
               className="DocImg"
@@ -33,7 +33,7 @@ const LottieAnimation = () => {
             />
           </div>
 
-          <div class="flex-item-right">
+          <div className="flex-item-right">
             <lottie-player
               src="https://assets4.lottiefiles.com/packages/lf20_1elvfrxr.json"
               className="lottie-animation"
@@ -41,7 +41,8 @@ const LottieAnimation = () => {
               speed="1"
               style={{ width: "250px", height: "250px" }}
               loop
-              autoplay></lottie-player>
+              autoplay
+            ></lottie-player>
           </div>
         </div>
       )}
