@@ -5,19 +5,13 @@ function Sidebar({ Info1, Info2, parentPath }) {
   const location = useLocation();
   // console.log(parentPath);
   return (
-    <div>
+    <>
       <div>
-        <center>
-          <img
-            src={Info1.imgURL}
-            alt="ImageMissing"
-            className="ReceptionImage"
-          />
-        </center>
+        <img src={Info1.imgURL} alt="ImageMissing" className="ReceptionImage" />
+        <br />
+        <div className="receptionWord">{Info1.Title}</div>
       </div>
-      <br />
-      <center className="receptionWord">{Info1.Title}</center>
-      <div>
+      <div className="SidebarOptions">
         {Object.entries(Info2).map(([key, value]) => (
           <div key={key} className="optt">
             <Link
@@ -33,7 +27,7 @@ function Sidebar({ Info1, Info2, parentPath }) {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 }
 

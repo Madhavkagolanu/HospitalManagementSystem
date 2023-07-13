@@ -6,18 +6,22 @@ function CatalogItems() {
   return (
     <div>
       {" "}
-      <h1 className="NPR">CREATE LAB INVOICE</h1>
-      <div class="Rece-flex-container">
-        <div class="Rece-flex-item-right">
-          <FormDetails InputFields={InputFields} />
+      <h1 className="NPR">Create LAB Catalog Item</h1>
+      <div className="Rece-flex-container">
+        <div className="container-right">
+          <div className="patientDet">
+            <FormDetails InputFields={InputFields} />
+          </div>
         </div>
       </div>
-      <button class="button-17 savesubmit" role="button">
-        ADD
-      </button>
-      <button class="button-17 savesubmit" role="button">
-        SUBMIT
-      </button>
+      <div className="buttondiv">
+        <button class="button-6 savesubmit" role="button">
+          ADD
+        </button>
+        <button class="button-6 savesubmit" role="button">
+          SUBMIT
+        </button>
+      </div>
     </div>
   );
 }

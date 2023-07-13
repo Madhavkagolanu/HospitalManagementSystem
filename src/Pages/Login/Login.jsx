@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import "@lottiefiles/lottie-player";
 import LottieAnimation from "../../Components/DocAnim";
@@ -16,6 +16,7 @@ var _ = require("lodash");
 
 function App() {
   const token = useTokenStore((state) => state.token.token);
+  const statuscode = useTokenStore((state) => state.token.statuscode);
   const role = useTokenStore((state) => state.token.role);
   const fetchnewToken = useTokenStore((state) => state.fetchnewToken);
   const username = useUsernameStore((state) => state.username);
@@ -24,24 +25,24 @@ function App() {
   const setpassword = usePasswordStore((state) => state.setpassword);
   const navigate = useNavigate();
 
+  const [trigger, settrigger] = useState(false);
+
   const login = async () => {
-    try {
-      await fetchnewToken(
-        process.env.REACT_APP_GetTokenURL,
-        username,
-        password
-      );
-    } catch (error) {
-      console.log("error triggered");
-      console.log(error);
-      console.log(error.response.status);
-      let httpcode = error.response.status;
-      setErrorToast(httpcode);
-    }
+    console.log(username);
+    console.log(password);
+    // try {
+    await fetchnewToken(process.env.REACT_APP_GetTokenURL, username, password);
+    // } catch (error) {
+    // console.log("error triggered");
+    // console.log(error);
+    // console.log(error.response.status);
+    // console.log(statuscode);
+    // }
+    settrigger(!trigger);
   };
 
   const setErrorToast = (httpcode) => {
-    console.log(httpcode);
+    // console.log(httpcode);
     if (httpcode === 500) {
       toastErrorStatus("Something went wrong. Try Again!!");
     } else if (httpcode === 401) {
@@ -54,17 +55,17 @@ function App() {
   const toastSuccessStatus = (message) => {
     toast.success(message, {
       closeOnClick: true,
-      theme: "light",
+      theme: "dark",
       autoClose: 3000,
       hideProgressBar: false,
-      position: "bottom-center",
+      position: "top-right",
       pauseOnHover: false,
     });
   };
   const toastErrorStatus = (message) => {
     toast.error(message, {
       closeOnClick: true,
-      theme: "light",
+      theme: "dark",
       autoClose: 3000,
       hideProgressBar: false,
       position: "top-right",
@@ -74,7 +75,9 @@ function App() {
 
   useEffect(() => {
     if (_.isNull(token) || _.isUndefined(token) || token === "") {
-      console.log("use effecttriggered");
+      // console.log("use effecttriggered");
+      let httpcode = statuscode;
+      setErrorToast(httpcode);
     } else {
       toastSuccessStatus("Login Successful");
 
@@ -88,7 +91,7 @@ function App() {
         });
       }
     }
-  }, [token]);
+  }, [trigger]);
   return (
     <div className="container">
       <div className="row">

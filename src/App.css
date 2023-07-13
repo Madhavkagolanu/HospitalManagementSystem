@@ -1,8 +1,161 @@
 body {
   background-image: url("\\Images\\bg.webp");
-  /* background-size: 100vw 100vh; */
-  background-size: 300vw 300vh;
+  background-size: 100vw 100vh;
+  /* background-size: 300vw 300vh; */
   /* min-width: 800px;
   min-height: 600px; */
-  background-image: no-repeat;
+  background-size: cover;
+  font-size: 20px;
+}
+
+:root {
+  --lightgrey: #d3d3d3;
+}
+
+#root {
+  display: flex;
+  min-width: 100vw;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.receptionDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+.LabelDivider {
+  font-size: 24px;
+  color: black;
+  text-align: center;
+  font-weight: 700;
+  height: clamp(24px, 30px, 50px);
+}
+
+.logoutButton {
+  background-color: grey;
+  color: white;
+  /* font-size: large; */
+  padding: 10px;
+  box-sizing: content-box;
+  max-width: 150px;
+  border-radius: 10px;
+}
+
+.SidebarOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: space-evenly;
+  align-items: left;
+}
+
+.fieldRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(lightgrey);
+  opacity: 0.7; /* Firefox */
+  font-size: 1em;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: var(lightgrey);
+  opacity: 0.7; /* Firefox */
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: var(lightgrey);
+  opacity: 0.7; /* Firefox */
+}
+
+.buttondiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.button-6 {
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(0.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.button-6:hover,
+.button-6:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.button-6:hover {
+  transform: translateY(-1px);
+}
+
+.button-6:active {
+  background-color: #f0f0f1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(0, 0, 0, 0.65);
+  transform: translateY(0);
+}
+
+.refreshicon {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: purple;
+  height: clamp(25px, 50px, 80px);
+  width: clamp(25px, 50px, 80px);
+}
+
+.iconstyle {
+  cursor: pointer;
+}
+
+.dropdowncontainer {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  color: black;
 }

@@ -7,17 +7,23 @@ import CatalogItems from "../../Components/Lab/catalogItems";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useTokenStore } from "../../store/store";
+import { usePasswordStore } from "../../store/store";
+import { useUsernameStore } from "../../store/store";
 var _ = require("lodash");
 
 function Lab() {
   const SideBarInfo1 = Con.Lab.SideBarInfo1;
   const SideBarInfo2 = Con.Lab.SideBarInfo2;
+  const setpassword = usePasswordStore((state) => state.setpassword);
+  const setusername = useUsernameStore((state) => state.setusername);
   const parentPath = Con.Lab.parentPath;
   const token = useTokenStore((state) => state.token.token);
   const setToken = useTokenStore((state) => state.setToken);
   const navigate = useNavigate();
 
   const logout = () => {
+    setpassword("");
+    setusername("");
     setToken("");
   };
 
@@ -35,22 +41,24 @@ function Lab() {
   }, [token]);
 
   return (
-    <div class="Rece-flex-container">
-      <div class="Rece-flex-item-left">
-        <SideBar
-          Info1={SideBarInfo1}
-          Info2={SideBarInfo2}
-          parentPath={parentPath}
-        />
-        <button class="button-17 logout" role="button" onClick={logout}>
-          Logout
-        </button>
-      </div>
-      <div>
-        <Routes>
-          <Route path="catalogitems" element={<CatalogItems />} />
-          <Route path="createinvoice" element={<CreateInvoice />} />
-        </Routes>
+    <div className="receptionDiv">
+      <div className="Rece-flex-container">
+        <div className="Rece-flex-item-left">
+          <SideBar
+            Info1={SideBarInfo1}
+            Info2={SideBarInfo2}
+            parentPath={parentPath}
+          />
+          <button class="logoutButton" onClick={logout}>
+            Logout
+          </button>
+        </div>
+        <div className="Rece-flex-item-right">
+          <Routes>
+            <Route path="catalogitems" element={<CatalogItems />} />
+            <Route path="createinvoice" element={<CreateInvoice />} />
+          </Routes>
+        </div>
       </div>
     </div>
   );
