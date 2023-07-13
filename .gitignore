@@ -1,2 +1,4 @@
 node_modules
+
+# dont commit these files
 .env
