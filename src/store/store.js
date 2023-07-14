@@ -7,6 +7,7 @@ export const useTokenStore = create((set) => ({
     set(() => ({ token: { statuscode: newStatus } })),
   setToken: (newToken) => set(() => ({ token: { token: newToken } })),
   fetchnewToken: async (serverURL, username, password) => {
+    serverURL = process.env.REACT_APP_GetTokenURL;
     let queryObj = {
       username: username,
       password: password,
@@ -24,13 +25,25 @@ export const useTokenStore = create((set) => ({
         },
       }));
     } catch (error) {
-      let httpcode = error.response.status;
-      console.log(error);
-      set(() => ({
-        token: {
-          statuscode: httpcode,
-        },
-      }));
+      try {
+        let httpcode = error.response.status;
+        console.log(error);
+        set(() => ({
+          token: {
+            token: "",
+            statuscode: httpcode,
+            message: error,
+          },
+        }));
+      } catch (error) {
+        set(() => ({
+          token: {
+            token: "",
+            statuscode: 500,
+            message: error,
+          },
+        }));
+      }
     }
   },
 }));
@@ -46,6 +59,7 @@ export const usePasswordStore = create((set) => ({
 export const useDoctorStore = create((set) => ({
   doctors: { data: [], message: "", statuscode: "" },
   fetchalldoctors: async (serverURL, token) => {
+    serverURL = process.env.REACT_APP_GetAllDoctors;
     const config = {
       headers: {
         tokendata: token,
@@ -54,6 +68,7 @@ export const useDoctorStore = create((set) => ({
 
     try {
       let output = await axios.get(serverURL, config);
+      console.log(output);
       let doctordata = output.data.data.data;
       set(() => ({
         doctors: {
@@ -62,12 +77,22 @@ export const useDoctorStore = create((set) => ({
         },
       }));
     } catch (error) {
-      let httpcode = error.response.status;
-      set(() => ({
-        doctors: {
-          statuscode: httpcode,
-        },
-      }));
+      try {
+        let httpcode = error.response.status;
+        set(() => ({
+          doctors: {
+            statuscode: httpcode,
+            message: error,
+          },
+        }));
+      } catch (error) {
+        set(() => ({
+          doctors: {
+            statuscode: 500,
+            message: error,
+          },
+        }));
+      }
     }
   },
 }));

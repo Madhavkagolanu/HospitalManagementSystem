@@ -66,7 +66,7 @@ body {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: var(lightgrey);
   opacity: 0.7; /* Firefox */
-  font-size: 1em;
+  font-size: 0.7em;
 }
 
 :-ms-input-placeholder {
@@ -139,16 +139,41 @@ body {
 
 .refreshicon {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: purple;
+  gap: 5px;
   height: clamp(25px, 50px, 80px);
-  width: clamp(25px, 50px, 80px);
+  width: clamp(60px, 80px, 100px);
+  box-sizing: border-box;
+  padding: 0px 3px;
+  border-radius: 10px;
+}
+
+.searchstyle {
+  background-color: gainsboro;
+  width: clamp(14px, 25px, 35px);
+  height: clamp(14px, 25px, 35px);
+  display: flex;
+  justify-content: center;
+  border-radius: 6px;
+  align-items: center;
 }
 
 .iconstyle {
   cursor: pointer;
+}
+
+.refreshbutton {
+  font-size: 0.6rem;
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  background-color: gainsboro;
+  padding: 1px 6px;
+  border-radius: 6px;
 }
 
 .dropdowncontainer {
@@ -158,4 +183,6 @@ body {
 .dropdown {
   position: absolute;
   color: black;
+  left: 26%;
+  top: 80%;
 }

@@ -3,8 +3,8 @@ import "./Login.css";
 import "@lottiefiles/lottie-player";
 import LottieAnimation from "../../Components/DocAnim";
 // import { getJWTtoken } from "./apis/userverification";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { setErrorToast, toastSuccessStatus } from "../../Components/sendToast";
 import { useNavigate } from "react-router-dom";
 import {
   useTokenStore,
@@ -39,38 +39,6 @@ function App() {
     // console.log(statuscode);
     // }
     settrigger(!trigger);
-  };
-
-  const setErrorToast = (httpcode) => {
-    // console.log(httpcode);
-    if (httpcode === 500) {
-      toastErrorStatus("Something went wrong. Try Again!!");
-    } else if (httpcode === 401) {
-      toastErrorStatus("Invalid credentials!!");
-    } else if (httpcode === 400) {
-      toastErrorStatus("Incomplete Details!!");
-    }
-  };
-
-  const toastSuccessStatus = (message) => {
-    toast.success(message, {
-      closeOnClick: true,
-      theme: "dark",
-      autoClose: 3000,
-      hideProgressBar: false,
-      position: "top-right",
-      pauseOnHover: false,
-    });
-  };
-  const toastErrorStatus = (message) => {
-    toast.error(message, {
-      closeOnClick: true,
-      theme: "dark",
-      autoClose: 3000,
-      hideProgressBar: false,
-      position: "top-right",
-      pauseOnHover: false,
-    });
   };
 
   useEffect(() => {
@@ -147,7 +115,7 @@ function App() {
               value={Password}
             /> */}
 
-            <button className="button-9" onClick={login}>
+            <button className="button-6 savesubmit" onClick={login}>
               LOGIN
             </button>
           </div>

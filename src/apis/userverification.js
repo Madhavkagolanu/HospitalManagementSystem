@@ -1,19 +1,78 @@
 import axios from "axios";
-import uuid4 from "uuid4";
 
-export const getJWTtoken = async (serverURL, username, password) => {
-  let queryObj = {
-    username: username,
-    password: password,
+// export const getJWTtoken = async (serverURL, username, password) => {
+//   let queryObj = {
+//     username: username,
+//     password: password,
+//   };
+//   let output = await axios.post(serverURL, queryObj);
+//   console.log(output);
+//   return output;
+// };
+
+export const enterPatientDetails = async (serverURL, token, patientdetails) => {
+  let data = {
+    message: "",
+    statuscode: "",
+    outdata: {},
   };
-  let output = await axios.post(serverURL, queryObj);
-  console.log(output);
-  return output;
+  serverURL = process.env.REACT_APP_CreatePatient;
+  const config = {
+    headers: {
+      tokendata: token,
+    },
+  };
+  try {
+    let output = await axios.post(serverURL, patientdetails, config);
+    console.log(output);
+    data.outdata = output.data;
+    data.statuscode = output.status;
+  } catch (error) {
+    data.message = error;
+    try {
+      data.statuscode = error.response.status;
+    } catch (error) {
+      data.statuscode = 500;
+    }
+  }
+  return data;
 };
+export const searchPatientDetails = async (
+  serverURL,
+  patientid,
+  phonenumber,
+  token
+) => {
+  serverURL = process.env.REACT_APP_SearchPatient;
+  console.log(serverURL);
+  console.log(patientid);
+  console.log(phonenumber);
+  serverURL = serverURL
+    .replaceAll("[patientid]", patientid)
+    .replaceAll("[phone]", phonenumber);
+  const config = {
+    headers: {
+      tokendata: token,
+    },
+  };
+  let data = {
+    message: "",
+    statuscode: "",
+    outdata: {},
+  };
 
-export const enterPatientDetails = async (serverURL, patientdetails) => {
-  let request_id = uuid4();
-  patientdetails.request_id = request_id;
-  let output = await axios.post(serverURL, patientdetails);
-  return output;
+  try {
+    let output = await axios.get(serverURL, config);
+    console.log(output);
+    data.outdata = output.data;
+    data.statuscode = output.status;
+  } catch (error) {
+    data.message = error;
+    try {
+      data.statuscode = error.response.status;
+    } catch (error) {
+      data.statuscode = 500;
+    }
+  }
+  return data;
 };

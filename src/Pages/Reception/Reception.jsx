@@ -8,10 +8,11 @@ import NewPatient from "../../Components/Reception/NewPatient";
 import SearchPatient from "../../Components/Reception/SearchPatient";
 import CreateVisit from "../../Components/Reception/CreateVisit";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTokenStore } from "../../store/store";
 import { usePasswordStore } from "../../store/store";
 import { useUsernameStore } from "../../store/store";
+import { useDoctorStore } from "../../store/store";
 var _ = require("lodash");
 
 function Reception() {
@@ -22,8 +23,20 @@ function Reception() {
   const setusername = useUsernameStore((state) => state.setusername);
   const token = useTokenStore((state) => state.token.token);
   const setToken = useTokenStore((state) => state.setToken);
-  const navigate = useNavigate();
+  const fetchnewToken = useTokenStore((state) => state.fetchnewToken);
+  const doctorarr = useDoctorStore((state) => state.doctors.data);
+  const Docstatuscode = useDoctorStore((state) => state.doctors.statuscode);
+  const fetchalldoctors = useDoctorStore((state) => state.fetchalldoctors);
+  const username = useUsernameStore((state) => state.username);
+  const password = usePasswordStore((state) => state.password);
+  const [newddlist, setnewddlist] = useState([]);
+  const [triggertoggle, setTriggertoggle] = useState(false);
 
+  const navigate = useNavigate();
+  const getAlldata = async () =>
+    await fetchalldoctors(process.env.REACT_APP_GetAllDoctors, token);
+  const getTokenData = async () =>
+    await fetchnewToken(process.env.REACT_APP_GetTokenURL, username, password);
   const logout = () => {
     setpassword("");
     setusername("");
@@ -32,15 +45,56 @@ function Reception() {
 
   useEffect(() => {
     if (_.isNull(token) || _.isUndefined(token) || token == "") {
+    } else {
+      let ddlist = [];
+      console.log("inner function called");
+      console.log(doctorarr);
+      if (Docstatuscode == 401) getTokenData();
+      doctorarr.map((item) => {
+        ddlist.push({
+          value: item.doctorname,
+          label: `DR. ${item.doctorname.toUpperCase()}`,
+        });
+      });
+      setnewddlist(ddlist);
+    }
+  }, [doctorarr]);
+
+  useEffect(() => {
+    if (_.isNull(token) || _.isUndefined(token) || token == "") {
       console.log("No Token");
       navigate("/", {
         replace: true,
       });
+    } else if (username == "" || password == "") {
+      setToken("");
     } else {
+      getAlldata();
       console.log("token found");
       navigate(`${parentPath}/newPatient`);
     }
+  }, []);
+
+  useEffect(() => {
+    if (_.isNull(token) || _.isUndefined(token) || token == "") {
+      console.log("No Token");
+      navigate("/", {
+        replace: true,
+      });
+    }
   }, [token]);
+
+  useEffect(() => {
+    if (_.isNull(token) || _.isUndefined(token) || token == "") {
+    } else {
+      if (username == "" || password == "") {
+        setToken("");
+      } else {
+        getAlldata();
+        console.log("token found");
+      }
+    }
+  }, [triggertoggle]);
 
   return (
     // <div className="receptionDiv">
@@ -57,9 +111,27 @@ function Reception() {
       </div>
       <div className="Rece-flex-item-right">
         <Routes>
-          <Route path="newPatient" element={<NewPatient />} />
+          <Route
+            path="newPatient"
+            element={
+              <NewPatient
+                newddlist={newddlist}
+                triggertoggle={triggertoggle}
+                setTriggertoggle={setTriggertoggle}
+              />
+            }
+          />
           <Route path="search" element={<SearchPatient />} />
-          <Route path="createvisit" element={<CreateVisit />} />
+          <Route
+            path="createvisit"
+            element={
+              <CreateVisit
+                newddlist={newddlist}
+                triggertoggle={triggertoggle}
+                setTriggertoggle={setTriggertoggle}
+              />
+            }
+          />
         </Routes>
       </div>
     </div>
