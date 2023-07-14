@@ -164,7 +164,7 @@
   transform: translate(-50%, -50%);
 }
 .InsideRightBox {
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
   border-radius: 5px;
   padding: 5px;
 }
@@ -193,7 +193,7 @@
   background-color: orange;
 }
 .Rece-flex-item-right {
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
   height: fit-content;
   padding: 10px;
   margin-right: 50px;

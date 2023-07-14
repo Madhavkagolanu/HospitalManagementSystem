@@ -15,12 +15,12 @@ const NewPatient = () => {
           <FormDetails InputFields={InputFields} />
         </div>
       </div>
-      <button className="button-17 savesubmit" role="button">
+      {/* <button className="button-17 savesubmit" role="button">
         Save
       </button>
       <button className="button-17 savesubmit" role="button">
         Submit
-      </button>
+      </button> */}
     </div>
   );
 };

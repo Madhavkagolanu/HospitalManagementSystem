@@ -12,12 +12,12 @@ function CreateInvoice() {
           <FormDetails InputFields={InputFields} />
         </div>
       </div>
-      <button class="button-17 savesubmit" role="button">
+      {/* <button class="button-17 savesubmit" role="button">
         ADD
       </button>
       <button class="button-17 savesubmit" role="button">
         SUBMIT
-      </button>
+      </button> */}
     </div>
   );
 }

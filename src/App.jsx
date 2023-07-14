@@ -4,10 +4,7 @@ import "./App.css";
 import Login from "./Pages/Login/Login";
 import Reception from "./Pages/Reception/Reception";
 import Lab from "./Pages/Lab/Lab";
-// import Search from "./Pages/Reception/Search";
-// import CreateVisit from "./Pages/Reception/CreateVisit";
-// import CreateInvoice from "./Pages/Lab/createInvoice";
-// import CatalogItem from "./Pages/Lab/catalogItem";
+
 import { ToastContainer } from "react-toastify";
 function App() {
   return (

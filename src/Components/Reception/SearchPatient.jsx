@@ -14,12 +14,12 @@ const SearchPatient = () => {
           <FormDetails InputFields={InputFields} />
         </div>
       </div>
-      <button className="button-17 savesubmit" role="button">
+      {/* <button className="button-17 savesubmit" role="button">
         RESET
       </button>
       <button className="button-17 savesubmit" role="button">
         ADD VISIT
-      </button>
+      </button> */}
     </div>
   );
 };
