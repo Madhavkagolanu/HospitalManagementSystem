@@ -1,4 +1,10 @@
-export const NameField = ({ setpatientdetails }) => {
+import { useEffect, useState } from "react";
+var _ = require("lodash");
+export const NameField = ({ triggerreset, setpatientdetails }) => {
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    setValue("");
+  }, [triggerreset]);
   return (
     <div className="fieldRow">
       <span className="patHeading">Name</span>
@@ -8,6 +14,8 @@ export const NameField = ({ setpatientdetails }) => {
         type="text"
         className="RecInp"
         placeholder="Name"
+        maxLength={32}
+        value={value}
         onChange={(e) => {
           setpatientdetails((prevState) => ({
             patientdetails: {
@@ -15,14 +23,7 @@ export const NameField = ({ setpatientdetails }) => {
               namevalue: e.target.value,
             },
           }));
-        }}
-        onSubmit={(e) => {
-          setpatientdetails((prevState) => ({
-            patientdetails: {
-              ...prevState.patientdetails,
-              namevalue: e.target.value,
-            },
-          }));
+          setValue(e.target.value);
         }}
       />
       <span className="refreshicon"></span>
@@ -30,7 +31,11 @@ export const NameField = ({ setpatientdetails }) => {
   );
 };
 
-export const Dob = ({ setpatientdetails }) => {
+export const Dob = ({ triggerreset, setpatientdetails }) => {
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    setValue("");
+  }, [triggerreset]);
   return (
     <div className="fieldRow">
       <span className="patHeading">Dob</span>
@@ -40,6 +45,8 @@ export const Dob = ({ setpatientdetails }) => {
         type="date"
         className="RecInp"
         placeholder="Dob"
+        maxLength={10}
+        value={value}
         onChange={(e) => {
           setpatientdetails((prevState) => ({
             patientdetails: {
@@ -47,6 +54,7 @@ export const Dob = ({ setpatientdetails }) => {
               dob: e.target.value,
             },
           }));
+          setValue(e.target.value);
         }}
       />
       <span className="refreshicon"></span>
@@ -54,7 +62,11 @@ export const Dob = ({ setpatientdetails }) => {
   );
 };
 
-export const Sex = ({ setpatientdetails }) => {
+export const Sex = ({ triggerreset, setpatientdetails }) => {
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    setValue("");
+  }, [triggerreset]);
   return (
     <div className="fieldRow">
       <span className="patHeading">Sex</span>
@@ -64,6 +76,8 @@ export const Sex = ({ setpatientdetails }) => {
         type="text"
         className="RecInp"
         placeholder="Sex"
+        value={value}
+        maxLength={1}
         onChange={(e) => {
           setpatientdetails((prevState) => ({
             patientdetails: {
@@ -71,6 +85,7 @@ export const Sex = ({ setpatientdetails }) => {
               sex: e.target.value,
             },
           }));
+          setValue(e.target.value);
         }}
       />
       <span className="refreshicon"></span>
@@ -78,7 +93,11 @@ export const Sex = ({ setpatientdetails }) => {
   );
 };
 
-export const EmailField = ({ setpatientdetails }) => {
+export const EmailField = ({ triggerreset, setpatientdetails }) => {
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    setValue("");
+  }, [triggerreset]);
   return (
     <div className="fieldRow">
       <span className="patHeading">Email</span>
@@ -88,6 +107,8 @@ export const EmailField = ({ setpatientdetails }) => {
         // required
         type="text"
         className="RecInp"
+        value={value}
+        maxLength={50}
         placeholder="Email"
         onChange={(e) => {
           setpatientdetails((prevState) => ({
@@ -96,6 +117,7 @@ export const EmailField = ({ setpatientdetails }) => {
               emailid: e.target.value,
             },
           }));
+          setValue(e.target.value);
         }}
       />
       <span className="refreshicon"></span>
@@ -103,23 +125,32 @@ export const EmailField = ({ setpatientdetails }) => {
   );
 };
 
-export const Mobile = ({ setpatientdetails }) => {
+export const Mobile = ({ triggerreset, setpatientdetails }) => {
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    setValue("");
+  }, [triggerreset]);
   return (
     <div className="fieldRow">
       <span className="patHeading">Mobile</span>
       <span className="star">*</span>
       <input
         required
-        type="text"
+        type="number"
+        value={value}
+        maxLength={10}
         className="RecInp"
         placeholder="Mobile"
         onChange={(e) => {
-          setpatientdetails((prevState) => ({
-            patientdetails: {
-              ...prevState.patientdetails,
-              mobile: e.target.value,
-            },
-          }));
+          if (e.target.value.length <= 10) {
+            setpatientdetails((prevState) => ({
+              patientdetails: {
+                ...prevState.patientdetails,
+                mobile: e.target.value,
+              },
+            }));
+            setValue(e.target.value);
+          }
         }}
       />
       <span className="refreshicon"></span>
@@ -127,7 +158,11 @@ export const Mobile = ({ setpatientdetails }) => {
   );
 };
 
-export const Altmobile = ({ setpatientdetails }) => {
+export const Altmobile = ({ triggerreset, setpatientdetails }) => {
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    setValue("");
+  }, [triggerreset]);
   return (
     <div className="fieldRow">
       <span className="patHeading">Alternate Mobile</span>
@@ -135,16 +170,21 @@ export const Altmobile = ({ setpatientdetails }) => {
       <span className="star"></span>
       <input
         // required
-        type="text"
+        type="number"
+        value={value}
+        maxLength={10}
         className="RecInp"
         placeholder="Alternate Mobile"
         onChange={(e) => {
-          setpatientdetails((prevState) => ({
-            patientdetails: {
-              ...prevState.patientdetails,
-              altmobile: e.target.value,
-            },
-          }));
+          if (e.target.value.length <= 10) {
+            setpatientdetails((prevState) => ({
+              patientdetails: {
+                ...prevState.patientdetails,
+                altmobile: e.target.value,
+              },
+            }));
+            setValue(e.target.value);
+          }
         }}
       />
       <span className="refreshicon"></span>
@@ -152,7 +192,11 @@ export const Altmobile = ({ setpatientdetails }) => {
   );
 };
 
-export const Landline = ({ setpatientdetails }) => {
+export const Landline = ({ triggerreset, setpatientdetails }) => {
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    setValue("");
+  }, [triggerreset]);
   return (
     <div className="fieldRow">
       <span className="patHeading">Landline</span>
@@ -160,16 +204,21 @@ export const Landline = ({ setpatientdetails }) => {
       <span className="star"></span>
       <input
         // required
-        type="text"
+        type="number"
+        value={value}
+        maxLength={10}
         className="RecInp"
         placeholder="Landline"
         onChange={(e) => {
-          setpatientdetails((prevState) => ({
-            patientdetails: {
-              ...prevState.patientdetails,
-              landline: e.target.value,
-            },
-          }));
+          if (e.target.value.length <= 10) {
+            setpatientdetails((prevState) => ({
+              patientdetails: {
+                ...prevState.patientdetails,
+                landline: e.target.value,
+              },
+            }));
+            setValue(e.target.value);
+          }
         }}
       />
       <span className="refreshicon"></span>
@@ -177,14 +226,19 @@ export const Landline = ({ setpatientdetails }) => {
   );
 };
 
-export const Amount = ({ setpatientdetails }) => {
+export const Amount = ({ triggerreset, setpatientdetails }) => {
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    setValue("");
+  }, [triggerreset]);
   return (
     <div className="fieldRow">
       <span className="patHeading">Amount Payable</span>
       <span className="star">*</span>
       <input
         required
-        type="text"
+        type="number"
+        value={value}
         className="RecInp"
         placeholder="Amount Payable"
         onChange={(e) => {
@@ -194,6 +248,7 @@ export const Amount = ({ setpatientdetails }) => {
               visitingcharges: e.target.value,
             },
           }));
+          setValue(e.target.value);
         }}
       />
       <span className="refreshicon"></span>
@@ -201,7 +256,11 @@ export const Amount = ({ setpatientdetails }) => {
   );
 };
 
-export const PaymentType = ({ setpatientdetails }) => {
+export const PaymentType = ({ triggerreset, setpatientdetails }) => {
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    setValue("");
+  }, [triggerreset]);
   return (
     <div className="fieldRow">
       <span className="patHeading">Payment Type</span>
@@ -210,6 +269,8 @@ export const PaymentType = ({ setpatientdetails }) => {
         required
         type="text"
         className="RecInp"
+        value={value}
+        maxLength={50}
         placeholder="Payment Type"
         onChange={(e) => {
           setpatientdetails((prevState) => ({
@@ -218,6 +279,7 @@ export const PaymentType = ({ setpatientdetails }) => {
               transactionid: e.target.value,
             },
           }));
+          setValue(e.target.value);
         }}
       />
       <span className="refreshicon"></span>
@@ -226,11 +288,24 @@ export const PaymentType = ({ setpatientdetails }) => {
 };
 
 export const PatientID = ({
+  triggerreset,
   setpatientdetails,
+  patientid,
   setpatientid,
   searchPatient,
+  needsearch,
   BsSearch,
 }) => {
+  const [value, setValue] = useState("");
+  const [updateStore, setupdateStore] = useState(true); // this variable will be used to stop store from getting updated on each keystore.
+  useEffect(() => {
+    console.log("reset form triggered for patient id");
+    setValue("");
+    patientid = "";
+  }, [triggerreset]);
+
+  // if (!_.isEmpty(patientid) && !_.isUndefined(patientid)) setValue(patientid);
+
   return (
     <div className="fieldRow">
       <span className="patHeading">Patient ID</span>
@@ -238,28 +313,50 @@ export const PatientID = ({
       <input
         type="text"
         className="RecInp"
+        value={value == "" ? patientid : console.log(value)}
         placeholder="Patient ID"
         onChange={(e) => {
+          if (updateStore) {
+            setupdateStore(false);
+            setpatientid("");
+          }
           setpatientdetails((prevState) => ({
             patientdetails: {
               ...prevState.patientdetails,
-              transactionid: e.target.value,
+              patientid: e.target.value,
             },
           }));
-          setpatientid(e.target.value);
+          // setpatientid(e.target.value);
+          setValue(e.target.value);
         }}
+        onFocus={(e) => {
+          console.log(e.target.value);
+          setpatientdetails((prevState) => ({
+            patientdetails: {
+              ...prevState.patientdetails,
+              patientid: e.target.value,
+            },
+          }));
+          // setpatientid(e.target.value);
+          setValue(e.target.value);
+        }}
+        autoFocus
       />{" "}
-      <span
-        className="refreshicon iconstyle "
-        onClick={(e) => {
-          searchPatient();
-          console.log("search triggered");
-        }}
-      >
-        <div className="searchstyle">
-          <BsSearch />
-        </div>
-      </span>
+      {needsearch ? (
+        <span
+          className="refreshicon iconstyle "
+          onClick={(e) => {
+            searchPatient();
+            console.log("search triggered");
+          }}
+        >
+          <div className="searchstyle">
+            <BsSearch />
+          </div>
+        </span>
+      ) : (
+        <span className="refreshicon iconstyle "></span>
+      )}
     </div>
   );
 };

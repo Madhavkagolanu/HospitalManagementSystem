@@ -1,8 +1,17 @@
-import { enterPatientDetails } from "../apis/userverification";
+import {
+  enterPatientDetails,
+  enterVisitingDetails,
+} from "../apis/userverification";
 import { v4 } from "uuid";
+import {
+  patientDetailsTemplate,
+  visitingdetailstemplate,
+} from "../models/templatemodels";
 
 export const FillPatientData = async (formdata, token) => {
-  let patientDetailsTemplate = {
+  console.log(formdata);
+  console.log(token);
+  let patientDetailsTemplatelocal = {
     name: "",
     dob: "",
     sex: "",
@@ -15,29 +24,57 @@ export const FillPatientData = async (formdata, token) => {
     transactionid: "",
     requestid: "",
   };
+  // Object.assign(patientDetailsTemplatelocal, patientDetailsTemplate);
 
-  console.log(v4());
-  patientDetailsTemplate.requestid = v4();
-  patientDetailsTemplate.name = formdata.namevalue;
-  patientDetailsTemplate.dob = formdata.dob;
-  patientDetailsTemplate.sex = formdata.sex;
-  patientDetailsTemplate.emailid =
+  // console.log(v4());
+  patientDetailsTemplatelocal.requestid = v4();
+  patientDetailsTemplatelocal.name = formdata.namevalue;
+  patientDetailsTemplatelocal.dob = formdata.dob;
+  patientDetailsTemplatelocal.sex = formdata.sex;
+  patientDetailsTemplatelocal.emailid =
     "emailid" in formdata ? formdata.emailid : "";
-  patientDetailsTemplate.mobile = formdata.mobile;
-  patientDetailsTemplate.altmobile =
+  patientDetailsTemplatelocal.mobile = formdata.mobile;
+  patientDetailsTemplatelocal.altmobile =
     "altmobile" in formdata ? formdata.altmobile : "";
-  patientDetailsTemplate.landline =
+  patientDetailsTemplatelocal.landline =
     "landline" in formdata ? formdata.landline : "";
-  patientDetailsTemplate.consultingdoctor = formdata.consultingdoctor;
-  patientDetailsTemplate.visitingcharges = formdata.visitingcharges;
-  patientDetailsTemplate.transactionid = formdata.transactionid;
+  patientDetailsTemplatelocal.consultingdoctor = formdata.consultingdoctor;
+  patientDetailsTemplatelocal.visitingcharges = formdata.visitingcharges;
+  patientDetailsTemplatelocal.transactionid = formdata.transactionid;
 
-  console.log(patientDetailsTemplate);
+  console.log(patientDetailsTemplatelocal);
   //Call API
   let createpatientoutput = await enterPatientDetails(
     process.env.REACT_APP_CreatePatient,
     token,
-    patientDetailsTemplate
+    patientDetailsTemplatelocal
   );
   return createpatientoutput;
+};
+
+export const FillVisitingData = async (formdata, token) => {
+  // console.log(formdata);
+  let visitingdetailstemplatelocal = {
+    patientid: "",
+    consultingdoctor: "",
+    visitingcharges: 0,
+    transactionid: "",
+  };
+  // Object.assign(visitingdetailstemplatelocal, visitingdetailstemplate);
+
+  visitingdetailstemplatelocal.patientid = formdata.patientid;
+  visitingdetailstemplatelocal.consultingdoctor = formdata.consultingdoctor;
+  visitingdetailstemplatelocal.visitingcharges = formdata.visitingcharges;
+  visitingdetailstemplatelocal.transactionid = formdata.transactionid;
+
+  console.log(visitingdetailstemplatelocal);
+
+  //Call API
+  let createvisitingoutput = await enterVisitingDetails(
+    process.env.REACT_APP_CreateVisit,
+    token,
+    visitingdetailstemplatelocal
+  );
+
+  return createvisitingoutput;
 };

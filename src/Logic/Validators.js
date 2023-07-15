@@ -22,7 +22,7 @@ export const patientdetailsvalidation = (formdata) => {
   // validate name
   if (validate("transactionid", "transactionid", formdata)) return false;
 
-  console.log("all clear ");
+  console.log("All Validations clear ");
   return true;
 };
 
@@ -41,10 +41,22 @@ const validate = (fieldpath, fieldname, formdata) => {
 };
 
 export const searchpatientvalidation = (patientid, phonenumber) => {
-  if (_.isEmpty(patientid)) {
+  if (_.isEmpty(patientid) || _.isUndefined(patientid)) {
     if (_.isEmpty(phonenumber)) {
       return false;
     }
   }
+  return true;
+};
+
+export const visitingdetailsvalidation = (formdata) => {
+  // validate name
+  if (validate("patientid", "patientid", formdata)) return false;
+  // validate consultingdoctor
+  if (validate("consultingdoctor", "consultingdoctor", formdata)) return false;
+  // validate visitingcharges
+  if (validate("visitingcharges", "visitingcharges", formdata)) return false;
+
+  console.log("All Validations clear ");
   return true;
 };

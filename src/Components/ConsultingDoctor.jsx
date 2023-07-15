@@ -1,6 +1,6 @@
 import React from "react";
 import { FiRefreshCcw } from "react-icons/fi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DropDownElement from "./DropDownElement";
 
 const ConsultingDoctor = ({
@@ -10,8 +10,18 @@ const ConsultingDoctor = ({
   setSelectedOption,
   triggertoggle,
   setTriggertoggle,
+  triggerreset,
 }) => {
   const [manualEntryTrigger, setmanualEntryTrigger] = useState(false);
+  const [resetDropdown, setresetDropdown] = useState(true);
+
+  useEffect(() => {
+    setSelectedOption("");
+    setsearchDoc("");
+    console.log(resetDropdown);
+    setresetDropdown(!resetDropdown);
+  }, [triggerreset]);
+
   return (
     <div className="fieldRow">
       <span className="patHeading">Consulting Doctor</span>
@@ -28,6 +38,7 @@ const ConsultingDoctor = ({
         />
       ) : (
         <DropDownElement
+          resetDropdown={resetDropdown}
           newddlist={newddlist}
           setSelectedOption={setSelectedOption}
         />

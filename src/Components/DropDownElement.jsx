@@ -2,9 +2,11 @@ import React from "react";
 import Select from "react-select";
 import { useState } from "react";
 
-const DropDownElement = ({ newddlist, setSelectedOption }) => {
+const DropDownElement = ({ resetDropdown, newddlist, setSelectedOption }) => {
+  // console.log(selectedvalue);
   return (
     <Select
+      key={resetDropdown ? "key1" : "key0"}
       defaultValue={""}
       onChange={(e) => {
         setSelectedOption(e.label);
@@ -14,7 +16,7 @@ const DropDownElement = ({ newddlist, setSelectedOption }) => {
       styles={{
         control: (baseStyles, state) => ({
           ...baseStyles,
-          borderColor: state.isFocused ? "grey" : "red",
+          borderColor: state.isFocused ? "blue" : "grey",
           color: "black",
         }),
         option: (baseStyles, state) => ({

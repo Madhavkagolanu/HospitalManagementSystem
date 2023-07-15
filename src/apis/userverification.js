@@ -24,10 +24,42 @@ export const enterPatientDetails = async (serverURL, token, patientdetails) => {
   };
   try {
     let output = await axios.post(serverURL, patientdetails, config);
+    // console.log(output);
+    data.outdata = output.data;
+    data.statuscode = output.status;
+  } catch (error) {
+    data.message = error;
+    try {
+      data.statuscode = error.response.status;
+    } catch (error) {
+      data.statuscode = 500;
+    }
+  }
+  return data;
+};
+export const enterVisitingDetails = async (
+  serverURL,
+  token,
+  visitingdetails
+) => {
+  let data = {
+    message: "",
+    statuscode: "",
+    outdata: {},
+  };
+  serverURL = process.env.REACT_APP_CreateVisit;
+  const config = {
+    headers: {
+      tokendata: token,
+    },
+  };
+  try {
+    let output = await axios.post(serverURL, visitingdetails, config);
     console.log(output);
     data.outdata = output.data;
     data.statuscode = output.status;
   } catch (error) {
+    console.log(error);
     data.message = error;
     try {
       data.statuscode = error.response.status;
@@ -44,9 +76,8 @@ export const searchPatientDetails = async (
   token
 ) => {
   serverURL = process.env.REACT_APP_SearchPatient;
-  console.log(serverURL);
-  console.log(patientid);
-  console.log(phonenumber);
+  console.log("patientid", patientid);
+  console.log("phonenumber", phonenumber);
   serverURL = serverURL
     .replaceAll("[patientid]", patientid)
     .replaceAll("[phone]", phonenumber);

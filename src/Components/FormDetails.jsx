@@ -19,14 +19,16 @@ function FormDetails({ InputFields }) {
           {key[2] == "label" ? (
             void 0
           ) : (
-            <input
-              type={key[2]}
-              className="RecInp"
-              placeholder={key[0]}
-              maxLength={32}
-            />
+            <>
+              <input
+                type={key[2]}
+                className="RecInp"
+                placeholder={key[0]}
+                maxLength={32}
+              />
+              <span className="refreshicon"></span>
+            </>
           )}
-          <span className="refreshicon"></span>
         </div>
       ))}
     </>

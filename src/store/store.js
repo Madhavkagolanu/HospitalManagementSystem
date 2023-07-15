@@ -7,6 +7,7 @@ export const useTokenStore = create((set) => ({
     set(() => ({ token: { statuscode: newStatus } })),
   setToken: (newToken) => set(() => ({ token: { token: newToken } })),
   fetchnewToken: async (serverURL, username, password) => {
+    console.log("Requesting New Token....");
     serverURL = process.env.REACT_APP_GetTokenURL;
     let queryObj = {
       username: username,
@@ -14,7 +15,7 @@ export const useTokenStore = create((set) => ({
     };
     try {
       let output = await axios.post(serverURL, queryObj);
-      console.log(output);
+      // console.log(output);
       let servertoken = output.data.token;
 
       set(() => ({
@@ -94,5 +95,13 @@ export const useDoctorStore = create((set) => ({
         }));
       }
     }
+  },
+}));
+
+export const usePatientIDStore = create((set) => ({
+  patientID: "",
+  setpatientID: (newpatientID) => {
+    console.log("inside set patient id: ", newpatientID);
+    set(() => ({ patientID: newpatientID }));
   },
 }));

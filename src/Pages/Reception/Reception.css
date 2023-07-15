@@ -44,7 +44,7 @@
   /* border-radius: 2px; */
   /* margin-right: 50px; */
   /* margin-bottom: 22px; */
-
+  padding: 0px 0px 0px 10px;
   /* margin: 20px; */
 }
 
@@ -75,6 +75,7 @@
   padding: 20px 20px;
   background-color: whitesmoke;
   border-radius: 10px 10px 10px 10px;
+  width: clamp(30vw, 50vw, 65vw);
   color: white;
   display: flex;
   flex-direction: column;
@@ -373,8 +374,8 @@
   /* border: px solid orange;    */
   background-color: rgba(0, 167, 162, 0.4);
   /* font-size: large;
-  margin-left: 25%;
-  margin-top: 3%; */
+  margin-left: 25%;*/
+  margin-top: 10px;
 }
 @media (max-width: 1245px) {
   /* .patHeading {

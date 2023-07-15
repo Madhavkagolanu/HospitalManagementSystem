@@ -50,12 +50,14 @@ function Reception() {
       console.log("inner function called");
       console.log(doctorarr);
       if (Docstatuscode == 401) getTokenData();
-      doctorarr.map((item) => {
-        ddlist.push({
-          value: item.doctorname,
-          label: `DR. ${item.doctorname.toUpperCase()}`,
+      if (!_.isEmpty(doctorarr)) {
+        doctorarr.map((item) => {
+          ddlist.push({
+            value: item.doctorname,
+            label: `DR. ${item.doctorname.toUpperCase()}`,
+          });
         });
-      });
+      }
       setnewddlist(ddlist);
     }
   }, [doctorarr]);
@@ -105,7 +107,7 @@ function Reception() {
           Info2={SideBarInfo2}
           parentPath={parentPath}
         />
-        <button className="logoutButton" onClick={logout}>
+        <button className="button-23" onClick={logout}>
           Logout
         </button>
       </div>

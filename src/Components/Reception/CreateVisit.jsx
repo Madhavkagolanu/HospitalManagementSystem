@@ -1,6 +1,4 @@
 import React from "react";
-import { Con } from "../../Config/Configure";
-import FormDetails from "../FormDetails";
 import { BsSearch } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import ConsultingDoctor from "../ConsultingDoctor";
@@ -9,31 +7,34 @@ import { useTokenStore } from "../../store/store";
 import { useUsernameStore } from "../../store/store";
 import { toastSuccessStatus, toastErrorStatus } from "../sendToast";
 import { usePasswordStore } from "../../store/store";
-import { PaymentType, PatientID } from "../Fields";
-import { FillPatientData } from "../../Logic/FormatData";
-import { searchpatientvalidation } from "../../Logic/Validators";
+import { usePatientIDStore } from "../../store/store";
+import { PaymentType, PatientID, Amount } from "../Fields";
+import { FillVisitingData } from "../../Logic/FormatData";
+import { CardDisplay } from "../CardDisplay";
+import {
+  searchpatientvalidation,
+  visitingdetailsvalidation,
+} from "../../Logic/Validators";
 
 const CreateVisit = ({ newddlist, triggertoggle, setTriggertoggle }) => {
-  // console.log("createvisit");
-  // const [searchDoc, setsearchDoc] = useState("");
-  // // const [outlist, setoutlist] = useState([]);
-  // const visitingrecord = {
-  //   patientid: "",
-  //   consultingdoctor: "",
-  //   visitingcharges: 0,
-  //   transactionid: "",
-  // };
+  const carddatatemplate = {};
+
+  const statuscode = useTokenStore((state) => state.token.statuscode);
   const token = useTokenStore((state) => state.token.token);
   const setToken = useTokenStore((state) => state.setToken);
   const fetchnewToken = useTokenStore((state) => state.fetchnewToken);
   const username = useUsernameStore((state) => state.username);
   const password = usePasswordStore((state) => state.password);
+  const patientid = usePatientIDStore((state) => state.patientID);
+  const setpatientID = usePatientIDStore((state) => state.setpatientID);
+
+  const [carddetails, setcarddetails] = useState({});
   const [searchDoc, setsearchDoc] = useState("");
-  const [patientid, setpatientid] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [patientdetails, setpatientdetails] = useState({});
-
-  const InputFields = Con.Reception.CreateVisit.InputFields;
+  const [triggerreset, settriggerreset] = useState(false);
+  const [retriggersubmit, setretriggersubmit] = useState(false);
+  const [retriggersearch, setretriggersearch] = useState(false);
 
   useEffect(() => {
     console.log("selected option effect triggered");
@@ -55,16 +56,37 @@ const CreateVisit = ({ newddlist, triggertoggle, setTriggertoggle }) => {
     }));
   }, [searchDoc]);
 
-  const resetForm = () => {
-    setpatientid("");
+  useEffect(() => {
+    if (retriggersubmit) {
+      callValidationAndSubmit();
+      setretriggersubmit(false);
+    }
+    if (retriggersearch) {
+      searchPatient();
+      setretriggersearch(false);
+    }
+  }, [retriggersubmit, retriggersearch]);
+
+  // const resetForm = () => {
+  //   setpatientid("");
+  // };
+
+  const resetform = () => {
+    settriggerreset(!triggerreset);
+    setpatientID("");
+    setcarddetails({});
   };
 
   const searchPatient = async () => {
-    console.log(process.env.REACT_APP_SearchPatient, patientid);
-    if (searchpatientvalidation(patientid, "")) {
+    console.log(
+      process.env.REACT_APP_SearchPatient,
+      patientdetails.patientdetails.patientid
+    );
+    let searchoutput = {};
+    if (searchpatientvalidation(patientdetails.patientdetails.patientid, "")) {
       let searchdata = await searchPatientDetails(
         process.env.REACT_APP_SearchPatient,
-        patientid,
+        patientdetails.patientdetails.patientid,
         "",
         token
       );
@@ -75,6 +97,15 @@ const CreateVisit = ({ newddlist, triggertoggle, setTriggertoggle }) => {
             toastErrorStatus("No Patient Found!!");
             break;
           }
+          console.log(searchdata.outdata.data[0]);
+          searchoutput.success = true;
+          searchoutput.patientid = searchdata.outdata.data[0].patientid;
+          searchoutput.patientname = searchdata.outdata.data[0].patientname;
+          searchoutput.patientdob = searchdata.outdata.data[0].patientdob;
+          searchoutput.mobilenum = searchdata.outdata.data[0].mobilenum;
+          searchoutput.consultingdoctor =
+            patientdetails.patientdetails.consultingdoctor;
+
           toastSuccessStatus("Patient details found!!");
           break;
         case 400:
@@ -86,49 +117,69 @@ const CreateVisit = ({ newddlist, triggertoggle, setTriggertoggle }) => {
             username,
             password
           );
-          if (token.statuscode == 401) {
+          if (statuscode == 401) {
             setToken("");
             toastErrorStatus("UnAuthorised Access. Login Again!!");
             break;
           }
-          searchPatient();
+          setretriggersearch(true);
           break;
         default:
           toastErrorStatus("Something went wrong. Try Again!!");
           break;
       }
     } else toastErrorStatus("Incomplete Details");
+    return searchoutput;
   };
 
   const callValidationAndSubmit = async () => {
-    console.log(patientdetails.patientdetails);
-    // if (patientdetailsvalidation(patientdetails.patientdetails)) {
-    //   let createdata = await FillPatientData(
-    //     patientdetails.patientdetails,
-    //     token
-    //   );
-    //   switch (createdata.statuscode) {
-    //     case 200:
-    //       toastSuccessStatus("Patient Registered Successfully!!");
-    //       console.log(createdata.outdata.id);
-    //       break;
-    //     case 400:
-    //       toastErrorStatus("Missing Details!!");
-    //       break;
-    //     case 401:
-    //       await fetchnewToken(username, password);
-    //       if (token.statuscode == 401) {
-    //         setToken("");
-    //         toastErrorStatus("UnAuthorised Access. Login Again!!");
-    //         break;
-    //       }
-    //       callValidationAndSubmit();
-    //       break;
-    //     default:
-    //       toastErrorStatus("Something went wrong. Try Again!!");
-    //       break;
-    //   }
-    // } else toastErrorStatus("Incomplete Details");
+    // console.log(patientdetails.patientdetails);
+    // console.log(token);
+    let searchoutput = await searchPatient();
+    console.log(searchoutput);
+    if (searchoutput.success) {
+      if (visitingdetailsvalidation(patientdetails.patientdetails)) {
+        let createdata = await FillVisitingData(
+          patientdetails.patientdetails,
+          token
+        );
+        switch (createdata.statuscode) {
+          case 200:
+            if (createdata.outdata.created) {
+              console.log(createdata.outdata.id);
+              toastSuccessStatus("Patient Visit Created Successfully!!");
+              carddatatemplate.patientid = searchoutput.patientid;
+              carddatatemplate.patientname = searchoutput.patientname;
+              carddatatemplate.patientdob = searchoutput.patientdob;
+              carddatatemplate.mobilenum = searchoutput.mobilenum;
+              carddatatemplate.consultingdoctor = searchoutput.consultingdoctor;
+              setcarddetails(carddatatemplate);
+              break;
+            }
+            resetform();
+            toastErrorStatus("Something went wrong. Try Again!!");
+            break;
+          case 400:
+            toastErrorStatus("Missing Details!!");
+            break;
+          case 401:
+            await fetchnewToken(username, password);
+            if (statuscode == 401) {
+              setToken("");
+              toastErrorStatus("UnAuthorised Access. Login Again!!");
+              break;
+            }
+            setretriggersubmit(true);
+            break;
+          default:
+            resetform();
+            toastErrorStatus("Something went wrong. Try Again!!");
+            break;
+        }
+      } else toastErrorStatus("Incomplete Details");
+    } else {
+      resetform();
+    }
   };
 
   return (
@@ -138,34 +189,14 @@ const CreateVisit = ({ newddlist, triggertoggle, setTriggertoggle }) => {
       <div className="Rece-flex-container">
         <div className="container-right">
           <div className="patientDet">
-            {/* <div className="fieldRow">
-              <span className="patHeading">Patient ID</span>
-              <span className="star">*</span>
-              <input
-                type="text"
-                className="RecInp"
-                placeholder="Patient ID"
-                onChange={(e) => {
-                  setsearchDoc(e.target.value);
-                }}
-              />{" "}
-              <span
-                className="refreshicon iconstyle "
-                onClick={(e) => {
-                  searchPatient();
-                  console.log("search triggered");
-                }}
-              >
-                <div className="searchstyle">
-                  <BsSearch />
-                </div>
-              </span>
-            </div> */}
             <PatientID
               setpatientdetails={setpatientdetails}
               searchPatient={searchPatient}
               BsSearch={BsSearch}
-              setpatientid={setpatientid}
+              triggerreset={triggerreset}
+              needsearch={true}
+              patientid={patientid}
+              setpatientid={setpatientID}
             />
             <ConsultingDoctor
               searchDoc={searchDoc}
@@ -174,16 +205,43 @@ const CreateVisit = ({ newddlist, triggertoggle, setTriggertoggle }) => {
               newddlist={newddlist}
               triggertoggle={triggertoggle}
               setTriggertoggle={setTriggertoggle}
+              triggerreset={triggerreset}
             />
             {/* <FormDetails InputFields={InputFields} />{" "} */}
-            <PaymentType setpatientdetails={setpatientdetails} />
+            <Amount
+              setpatientdetails={setpatientdetails}
+              triggerreset={triggerreset}
+            />
+            <PaymentType
+              setpatientdetails={setpatientdetails}
+              triggerreset={triggerreset}
+            />
           </div>
         </div>
       </div>
       <div className="buttondiv">
-        <button className="button-6 savesubmit">RESET</button>
-        <button className="button-6 savesubmit">CREATE VISIT</button>
+        <button className="button-6 savesubmit" onClick={resetform}>
+          RESET
+        </button>
+        <button
+          className="button-6 savesubmit"
+          onClick={callValidationAndSubmit}
+        >
+          CREATE VISIT
+        </button>
       </div>
+      <CardDisplay
+        key={1}
+        data={carddetails}
+        CardHeader={"Patient Visit Details"}
+        displayprintbutton={true}
+        displayradiobutton={false}
+        displaykey={1}
+        setvisitingpatientid={() => {}}
+        setcardkey={() => {}}
+        cardkey={""}
+        displayheader={true}
+      />
     </div>
   );
 };
