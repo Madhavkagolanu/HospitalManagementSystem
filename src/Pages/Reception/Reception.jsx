@@ -1,6 +1,7 @@
 import React from "react";
 import "./Reception.css";
 import SideBar from "../../Components/Sidebar";
+import CreateInvoice from "../../Components/Lab/createInvoice";
 import FormDetails from "../../Components/FormDetails";
 import { Con } from "../../Config/Configure";
 import { Route, Routes } from "react-router-dom";
@@ -53,11 +54,12 @@ function Reception() {
       if (!_.isEmpty(doctorarr)) {
         doctorarr.map((item) => {
           ddlist.push({
-            value: item.doctorname,
+            value: JSON.stringify(item),
             label: `DR. ${item.doctorname.toUpperCase()}`,
           });
         });
       }
+      console.log(ddlist);
       setnewddlist(ddlist);
     }
   }, [doctorarr]);
@@ -125,7 +127,7 @@ function Reception() {
           />
           <Route path="search" element={<SearchPatient />} />
           <Route
-            path="createvisit"
+            path="createvisit/*"
             element={
               <CreateVisit
                 newddlist={newddlist}
@@ -134,6 +136,7 @@ function Reception() {
               />
             }
           />
+          <Route path="createinvoice" element={<CreateInvoice />} />
         </Routes>
       </div>
     </div>

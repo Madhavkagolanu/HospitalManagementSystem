@@ -2,7 +2,6 @@ import React from "react";
 import SideBar from "../../Components/Sidebar";
 import { Route, Routes } from "react-router-dom";
 import { Con } from "../../Config/Configure";
-import CreateInvoice from "../../Components/Lab/createInvoice";
 import CatalogItems from "../../Components/Lab/catalogItems";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -113,7 +112,6 @@ function Lab() {
         <div className="Rece-flex-item-right">
           <Routes>
             <Route path="catalogitems" element={<CatalogItems />} />
-            <Route path="createinvoice" element={<CreateInvoice />} />
           </Routes>
         </div>
       </div>

@@ -9,6 +9,7 @@ export const Con = {
       newPatient: "Registration",
       search: "Search",
       createvisit: "Create Visit",
+      createinvoice: "Create Invoice",
     },
     newPatient: {
       InputFields: [
@@ -26,6 +27,12 @@ export const Con = {
     CreateVisit: {
       InputFields: [["Payment Type", 1, "text"]],
     },
+    createInvoice: {
+      InputFields: [
+        ["Patient Name", 1, "text"],
+        ["Patient Ph No", 1, "number"],
+      ],
+    },
   },
   Lab: {
     parentPath: "/lab",
@@ -35,7 +42,6 @@ export const Con = {
     },
     SideBarInfo2: {
       catalogitems: "CREATE ITEM",
-      createinvoice: "CREATE INVOICE",
     },
     createInvoice: {
       InputFields: [
