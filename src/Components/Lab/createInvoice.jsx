@@ -4,6 +4,7 @@ import FormDetails from "../../Components/FormDetails";
 import { FiRefreshCcw } from "react-icons/fi";
 import { BsSearch } from "react-icons/bs";
 import { Con } from "../../Config/Configure";
+
 function CreateInvoice() {
   const [searchDoc, setsearchDoc] = useState("");
   const InputFields = Con.Lab.createInvoice.InputFields;

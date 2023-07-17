@@ -240,6 +240,7 @@
 }
 @import url("https://fonts.googleapis.com/css2?family=Anton&family=Cinzel:wght@500&family=Crimson+Text:wght@700&family=DM+Sans:wght@700&family=Dancing+Script:wght@700&family=Heebo:wght@100;700;800;900&family=IBM+Plex+Mono:wght@700&family=Lato:wght@300;400&family=Montserrat:ital,wght@0,300;0,400;1,400&family=Nanum+Gothic&family=Noto+Sans+HK&family=Open+Sans:wght@300&family=Plus+Jakarta+Sans:wght@200&family=Poppins:wght@200;300;400;500;600&family=Prompt:wght@300&family=Questrial&family=Wix+Madefor+Text&display=swap");
 .NPR {
+  font-size: 2rem;
   text-align: center;
   color: #004aad;
   font-family: "Anton", sans-serif;
@@ -410,7 +411,7 @@
   background-color: white;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
 }
 .optt {
   /* margin-bottom: 20px; */

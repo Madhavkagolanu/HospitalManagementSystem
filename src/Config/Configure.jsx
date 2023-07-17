@@ -34,7 +34,7 @@ export const Con = {
       Title: "Laboratory",
     },
     SideBarInfo2: {
-      catalogitems: "CREATE CATALOG ITEM",
+      catalogitems: "CREATE ITEM",
       createinvoice: "CREATE INVOICE",
     },
     createInvoice: {

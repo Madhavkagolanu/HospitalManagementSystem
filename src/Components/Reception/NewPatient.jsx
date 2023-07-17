@@ -133,6 +133,8 @@ const NewPatient = ({ newddlist, triggertoggle, setTriggertoggle }) => {
             <NameField
               setpatientdetails={setpatientdetails}
               triggerreset={triggerreset}
+              disabled={false}
+              externalvalue={""}
             />
             <Dob
               setpatientdetails={setpatientdetails}

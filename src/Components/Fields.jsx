@@ -1,10 +1,21 @@
 import { useEffect, useState } from "react";
 var _ = require("lodash");
-export const NameField = ({ triggerreset, setpatientdetails }) => {
+export const NameField = ({
+  triggerreset,
+  setpatientdetails,
+  disabled,
+  externalvalue,
+}) => {
   const [value, setValue] = useState("");
+
   useEffect(() => {
     setValue("");
   }, [triggerreset]);
+
+  useEffect(() => {
+    if (_.isEmpty(externalvalue.trim())) setValue(externalvalue);
+  }, [externalvalue]);
+
   return (
     <div className="fieldRow">
       <span className="patHeading">Name</span>
@@ -360,3 +371,45 @@ export const PatientID = ({
     </div>
   );
 };
+
+// export const PatientName = ({
+//   triggerreset,
+//   setpatientdetails,
+//   disabled,
+//   externalvalue,
+// }) => {
+//   const [value, setValue] = useState("");
+
+//   useEffect(() => {
+//     setValue("");
+//   }, [triggerreset]);
+//   useEffect(() => {
+//     if (_.isEmpty(externalvalue.trim())) setValue(externalvalue);
+//   }, [externalvalue]);
+
+//   return (
+//     <div className="fieldRow">
+//       <span className="patHeading">Name</span>
+//       <span className="star">*</span>
+//       <input
+//         required
+//         type="text"
+//         className="RecInp"
+//         placeholder="Name"
+//         maxLength={32}
+//         value={value}
+//         disabled={disabled}
+//         onChange={(e) => {
+//           setpatientdetails((prevState) => ({
+//             patientdetails: {
+//               ...prevState.patientdetails,
+//               namevalue: e.target.value,
+//             },
+//           }));
+//           setValue(e.target.value);
+//         }}
+//       />
+//       <span className="refreshicon"></span>
+//     </div>
+//   );
+// };
