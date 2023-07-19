@@ -8,34 +8,33 @@ export const Con = {
     SideBarInfo2: {
       newPatient: "Registration",
       search: "Search",
-      createvisit: "Create Visit",
+      // '': "Create Visit",
+      // 'createvisit/OP': "Create Visit OP",
+      createinvoice: "Create Invoice",
     },
     newPatient: {
       InputFields: [
-        ["NAME", 1, "text"],
-        ["DATE", 1, "date"],
-        ["SEX", 1, "text"],
-        ["MOBILE NUMBER", 1, "text"],
-        ["ALT. MOBILE NUMBER", 0, "text"],
-        ["EMAIL ID", 0, "email"],
-        ["CONST. DOCTOR", 1, "text"],
-        ["AMOUNT PAYABLE", 1, "number"],
-        ["TRANSACTION ID", 1, "text"],
+        ["Name", 1, "text"],
+        ["Date", 1, "date"],
+        ["Sex", 1, "text"],
+        ["Mobile", 1, "text"],
+        ["Alternate Mobile", 0, "text"],
+        ["EmailId", 0, "email"],
       ],
     },
     Search: {
-      InputFields: [
-        ["PATIENT ID", 1, "text"],
-        ["OR", 0, "label"],
-        ["MOBILE NUMBER", 1, "text"],
-      ],
+      InputFields: [["OR", 0, "label"]],
     },
-    CreateVisit: {
+    CreateVisitIP: {
+      InputFields: [["Payment Type", 1, "text"]],
+    },
+    CreateVisitOP: {
+      InputFields: [["Payment Type", 1, "text"]],
+    },
+    createInvoice: {
       InputFields: [
-        ["PATIENT ID", 1, "text"],
-        ["CONST. DOCTOR", 1, "text"],
-        ["VISITING CHARGES", 1, "number"],
-        ["TRANSACTION ID", 1, "text"],
+        ["Patient Name", 1, "text"],
+        ["Patient Ph No", 1, "number"],
       ],
     },
   },
@@ -46,23 +45,18 @@ export const Con = {
       Title: "Laboratory",
     },
     SideBarInfo2: {
-      catalogitems: "CREATE CATALOG ITEM",
-      createinvoice: "CREATE INVOICE",
+      catalogitems: "CREATE ITEM",
     },
     createInvoice: {
       InputFields: [
-        ["PATIENT ID", 1, "text"],
-        ["PATIENT NAME", 1, "text"],
-        ["PATIENT PH NO.", 1, "number"],
-        ["CONST. DOCTOR", 1, "text"],
-        ["LAB ITEM", 1, "text"],
-        ["TRANSACTION ID", 1, "text"],
+        ["Patient Name", 1, "text"],
+        ["Patient Ph No", 1, "number"],
       ],
     },
     catalogItems: {
       InputFields: [
-        ["LAB ITEM NAME", 1, "text"],
-        ["MRP", 1, "text"],
+        ["Lab Item Name", 1, "text"],
+        ["mrp", 1, "text"],
       ],
     },
   },

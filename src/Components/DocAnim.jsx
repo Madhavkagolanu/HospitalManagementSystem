@@ -22,7 +22,7 @@ const LottieAnimation = () => {
     };
   }, []);
   return (
-    <div>
+    <>
       {isScreenSmall ? null : (
         <div className="flex-container">
           <div className="flex-item-left">
@@ -46,7 +46,7 @@ const LottieAnimation = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
